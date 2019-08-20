@@ -86,9 +86,6 @@ public class Board extends JPanel {
 
     private void drawObjects(Graphics2D g2d) {
 
-        g2d.drawString("end", 300, 50);
-        g2d.drawString("start", 0, 50);
-
         g2d.drawImage(ball.getImage(), ball.getX(), ball.getY(),
                 ball.getImageWidth(), ball.getImageHeight(), this);
         g2d.drawImage(paddle.getImage(), paddle.getX(), paddle.getY(),
