@@ -16,7 +16,7 @@ public class Breakout extends JFrame {
         setTitle("Breakout");
         
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(Commons.WIDTH, Commons.HEIGTH);
+        setSize(Commons.WIDTH, Commons.HEIGHT);
         setLocationRelativeTo(null);
         setResizable(false);
     }
@@ -24,7 +24,8 @@ public class Breakout extends JFrame {
     public static void main(String[] args) {
         
         EventQueue.invokeLater(() -> {
-            Breakout game = new Breakout();
+
+            var game = new Breakout();
             game.setVisible(true);
         });
     }

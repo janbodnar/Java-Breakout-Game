@@ -28,7 +28,7 @@ public class Ball extends Sprite implements Commons {
         image = ii.getImage();
     }
 
-    public void move() {
+    void move() {
 
         x += xdir;
         y += ydir;
@@ -52,15 +52,18 @@ public class Ball extends Sprite implements Commons {
         y = INIT_BALL_Y;
     }
 
-    public void setXDir(int x) {
+    void setXDir(int x) {
+
         xdir = x;
     }
 
-    public void setYDir(int y) {
+    void setYDir(int y) {
+
         ydir = y;
     }
 
-    public int getYDir() {
+    int getYDir() {
+
         return ydir;
     }
 }

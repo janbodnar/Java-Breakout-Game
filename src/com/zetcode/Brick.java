@@ -24,16 +24,16 @@ public class Brick extends Sprite {
     
     private void loadImage() {
         
-        ImageIcon ii = new ImageIcon("src/resources/brick.png");
+        var ii = new ImageIcon("src/resources/brick.png");
         image = ii.getImage();        
     }
 
-    public boolean isDestroyed() {
+    boolean isDestroyed() {
         
         return destroyed;
     }
 
-    public void setDestroyed(boolean val) {
+    void setDestroyed(boolean val) {
         
         destroyed = val;
     }

@@ -26,7 +26,7 @@ public class Paddle extends Sprite implements Commons {
         image = ii.getImage();        
     }    
 
-    public void move() {
+    void move() {
 
         x += dx;
 
@@ -39,7 +39,7 @@ public class Paddle extends Sprite implements Commons {
         }
     }
 
-    public void keyPressed(KeyEvent e) {
+    void keyPressed(KeyEvent e) {
 
         int key = e.getKeyCode();
 
@@ -52,7 +52,7 @@ public class Paddle extends Sprite implements Commons {
         }
     }
 
-    public void keyReleased(KeyEvent e) {
+    void keyReleased(KeyEvent e) {
 
         int key = e.getKeyCode();
 
