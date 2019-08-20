@@ -3,6 +3,7 @@ package com.zetcode;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -15,7 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class Board extends JPanel implements Commons {
+public class Board extends JPanel {
 
     private Timer timer;
     private String message = "Game Over";
@@ -33,20 +34,14 @@ public class Board extends JPanel implements Commons {
 
         addKeyListener(new TAdapter());
         setFocusable(true);
+        setPreferredSize(new Dimension(Commons.WIDTH, Commons.HEIGHT));
 
-        bricks = new Brick[N_OF_BRICKS];
-        timer = new Timer(PERIOD, new GameCycle());
-        timer.start();
-    }
-
-    @Override
-    public void addNotify() {
-
-        super.addNotify();
         gameInit();
     }
 
     private void gameInit() {
+
+        bricks = new Brick[Commons.N_OF_BRICKS];
 
         ball = new Ball();
         paddle = new Paddle();
@@ -61,6 +56,9 @@ public class Board extends JPanel implements Commons {
                 k++;
             }
         }
+
+        timer = new Timer(Commons.PERIOD, new GameCycle());
+        timer.start();
     }
 
     @Override
@@ -88,12 +86,15 @@ public class Board extends JPanel implements Commons {
 
     private void drawObjects(Graphics2D g2d) {
 
+        g2d.drawString("end", 300, 50);
+        g2d.drawString("start", 0, 50);
+
         g2d.drawImage(ball.getImage(), ball.getX(), ball.getY(),
                 ball.getImageWidth(), ball.getImageHeight(), this);
         g2d.drawImage(paddle.getImage(), paddle.getX(), paddle.getY(),
                 paddle.getImageWidth(), paddle.getImageHeight(), this);
 
-        for (int i = 0; i < N_OF_BRICKS; i++) {
+        for (int i = 0; i < Commons.N_OF_BRICKS; i++) {
 
             if (!bricks[i].isDestroyed()) {
 
@@ -120,11 +121,13 @@ public class Board extends JPanel implements Commons {
 
         @Override
         public void keyReleased(KeyEvent e) {
+
             paddle.keyReleased(e);
         }
 
         @Override
         public void keyPressed(KeyEvent e) {
+
             paddle.keyPressed(e);
         }
     }
@@ -159,13 +162,14 @@ public class Board extends JPanel implements Commons {
             stopGame();
         }
 
-        for (int i = 0, j = 0; i < N_OF_BRICKS; i++) {
+        for (int i = 0, j = 0; i < Commons.N_OF_BRICKS; i++) {
 
             if (bricks[i].isDestroyed()) {
+
                 j++;
             }
 
-            if (j == N_OF_BRICKS) {
+            if (j == Commons.N_OF_BRICKS) {
 
                 message = "Victory";
                 stopGame();
@@ -213,7 +217,7 @@ public class Board extends JPanel implements Commons {
             }
         }
 
-        for (int i = 0; i < N_OF_BRICKS; i++) {
+        for (int i = 0; i < Commons.N_OF_BRICKS; i++) {
 
             if ((ball.getRect()).intersects(bricks[i].getRect())) {
 
