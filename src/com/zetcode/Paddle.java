@@ -3,7 +3,7 @@ package com.zetcode;
 import java.awt.event.KeyEvent;
 import javax.swing.ImageIcon;
 
-public class Paddle extends Sprite implements Commons {
+public class Paddle extends Sprite  {
 
     private int dx;
 
@@ -22,7 +22,7 @@ public class Paddle extends Sprite implements Commons {
     
     private void loadImage() {
         
-        ImageIcon ii = new ImageIcon("src/resources/paddle.png");
+        var ii = new ImageIcon("src/resources/paddle.png");
         image = ii.getImage();        
     }    
 
@@ -31,11 +31,13 @@ public class Paddle extends Sprite implements Commons {
         x += dx;
 
         if (x <= 0) {
+
             x = 0;
         }
 
-        if (x >= WIDTH - imageWidth) {
-            x = WIDTH - imageWidth;
+        if (x >= Commons.WIDTH - imageWidth) {
+
+            x = Commons.WIDTH - imageWidth;
         }
     }
 
@@ -44,10 +46,12 @@ public class Paddle extends Sprite implements Commons {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
+
             dx = -1;
         }
 
         if (key == KeyEvent.VK_RIGHT) {
+
             dx = 1;
         }
     }
@@ -57,17 +61,19 @@ public class Paddle extends Sprite implements Commons {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_LEFT) {
+
             dx = 0;
         }
 
         if (key == KeyEvent.VK_RIGHT) {
+
             dx = 0;
         }
     }
 
     private void resetState() {
 
-        x = INIT_PADDLE_X;
-        y = INIT_PADDLE_Y;
+        x = Commons.INIT_PADDLE_X;
+        y = Commons.INIT_PADDLE_Y;
     }
 }
