@@ -1,17 +1,20 @@
 package com.zetcode;
 
 import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.io.InputStream;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 
-public class Paddle extends Sprite  {
+public class Paddle extends Sprite {
 
     private int dx;
 
     public Paddle() {
-        
-        initPaddle();        
+
+        initPaddle();
     }
-    
+
     private void initPaddle() {
 
         loadImage();
@@ -19,12 +22,18 @@ public class Paddle extends Sprite  {
 
         resetState();
     }
-    
+
     private void loadImage() {
-        
-        var ii = new ImageIcon("src/resources/paddle.png");
-        image = ii.getImage();        
-    }    
+
+        InputStream stream = getClass().getResourceAsStream(Commons.PADDLE_IMAGE);
+        ImageIcon ii;
+        try {
+            ii = new ImageIcon(ImageIO.read(stream));
+            image = ii.getImage();
+        } catch (IOException ex) {
+            System.out.println("Unable to load paddle.png");
+        }
+    }
 
     void move() {
 
