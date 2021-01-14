@@ -1,7 +1,10 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.zetcode;
 
-import javax.swing.JPanel;
-import javax.swing.Timer;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -15,7 +18,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import javax.swing.JPanel;
+import javax.swing.Timer;
 
+/**
+ *
+ * @author istvan
+ */
 public class Board extends JPanel {
 
     private Timer timer;
@@ -65,7 +74,7 @@ public class Board extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        var g2d = (Graphics2D) g;
+        Graphics2D g2d = (Graphics2D) g;
 
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
@@ -85,26 +94,20 @@ public class Board extends JPanel {
     }
 
     private void drawObjects(Graphics2D g2d) {
-
-        g2d.drawImage(ball.getImage(), ball.getX(), ball.getY(),
-                ball.getImageWidth(), ball.getImageHeight(), this);
-        g2d.drawImage(paddle.getImage(), paddle.getX(), paddle.getY(),
-                paddle.getImageWidth(), paddle.getImageHeight(), this);
+        
+        ball.draw(g2d);
+        paddle.draw(g2d);
 
         for (int i = 0; i < Commons.N_OF_BRICKS; i++) {
-
             if (!bricks[i].isDestroyed()) {
-
-                g2d.drawImage(bricks[i].getImage(), bricks[i].getX(),
-                        bricks[i].getY(), bricks[i].getImageWidth(),
-                        bricks[i].getImageHeight(), this);
+                bricks[i].draw(g2d);
             }
         }
     }
 
     private void gameFinished(Graphics2D g2d) {
 
-        var font = new Font("Verdana", Font.BOLD, 18);
+        Font font = new Font("Verdana", Font.BOLD, 18);
         FontMetrics fontMetrics = this.getFontMetrics(font);
 
         g2d.setColor(Color.BLACK);
@@ -126,6 +129,10 @@ public class Board extends JPanel {
         public void keyPressed(KeyEvent e) {
 
             paddle.keyPressed(e);
+
+            if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
+                System.exit(0);
+            }
         }
     }
 
@@ -212,6 +219,8 @@ public class Board extends JPanel {
                 ball.setXDir(1);
                 ball.setYDir(-1);
             }
+
+            Ball.playSound();
         }
 
         for (int i = 0; i < Commons.N_OF_BRICKS; i++) {
@@ -223,10 +232,10 @@ public class Board extends JPanel {
                 int ballWidth = (int) ball.getRect().getWidth();
                 int ballTop = (int) ball.getRect().getMinY();
 
-                var pointRight = new Point(ballLeft + ballWidth + 1, ballTop);
-                var pointLeft = new Point(ballLeft - 1, ballTop);
-                var pointTop = new Point(ballLeft, ballTop - 1);
-                var pointBottom = new Point(ballLeft, ballTop + ballHeight + 1);
+                Point pointRight = new Point(ballLeft + ballWidth + 1, ballTop);
+                Point pointLeft = new Point(ballLeft - 1, ballTop);
+                Point pointTop = new Point(ballLeft, ballTop - 1);
+                Point pointBottom = new Point(ballLeft, ballTop + ballHeight + 1);
 
                 if (!bricks[i].isDestroyed()) {
 
@@ -248,6 +257,7 @@ public class Board extends JPanel {
 
                     bricks[i].setDestroyed(true);
                 }
+                Ball.playSound();
             }
         }
     }

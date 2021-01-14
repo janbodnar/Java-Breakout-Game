@@ -1,5 +1,11 @@
 package com.zetcode;
 
+import java.io.IOException;
+import java.io.InputStream;
+import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.ImageIcon;
 
 public class Ball extends Sprite {
@@ -13,7 +19,7 @@ public class Ball extends Sprite {
     }
 
     private void initBall() {
-        
+
         xdir = 1;
         ydir = -1;
 
@@ -23,12 +29,33 @@ public class Ball extends Sprite {
     }
 
     private void loadImage() {
-
-        var ii = new ImageIcon("src/resources/ball.png");
-        image = ii.getImage();
+        InputStream stream = getClass().getResourceAsStream(Commons.BALL_IMAGE);
+        ImageIcon ii;
+        try {
+            ii = new ImageIcon(ImageIO.read(stream));
+            image = ii.getImage();
+        } catch (IOException ex) {
+            System.out.println("Unable to load ball.png");
+        }
     }
 
-    void move() {
+    public static synchronized void playSound() {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    Clip clip = AudioSystem.getClip();
+                    InputStream stream = getClass().getResourceAsStream(Commons.BALL_SOUND);
+                    AudioInputStream ais = AudioSystem.getAudioInputStream(stream);
+                    clip.open(ais);
+                    clip.start();
+                } catch (Exception e) {
+                    System.err.println(e.getMessage());
+                }
+            }
+        }).start();
+    }
+
+    public void move() {
 
         x += xdir;
         y += ydir;
